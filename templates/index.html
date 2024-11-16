@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<h1>Image Upload</h1>
+
+<div class="upload-form">
+    <h2>Upload new files</h2>
+    <form method="post" enctype="multipart/form-data">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <input type="file" name="file" accept="image/*" multiple>
+        <input type="submit" value="Upload">
+    </form>
+</div>
+
+<h2>Your Uploaded Files</h2>
+<div class="image-grid">
+    {% for file in files %}
+        <div class="image-item">
+            <!-- Display the thumbnail for preview -->
+            <a href="{{ url_for('static', filename='uploads/' + file.filename) }}" target="_blank">
+                <img src="{{ url_for('static', filename='uploads/' + file.filename) }}" alt="{{ file.original_filename }}" class="thumbnail">
+            </a>
+            <p>{{ file.original_filename }}</p>
+            <p>Uploaded: {{ file.upload_date.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+
+            <!-- Download link for full image -->
+            <a href="{{ url_for('download_file', file_id=file.id) }}">Download</a> |
+            <a href="{{ url_for('delete_file', file_id=file.id) }}" onclick="return confirm('Are you sure?')">Delete</a>
+        </div>
+    {% else %}
+        <p>No files uploaded yet.</p>
+    {% endfor %}
+</div>
+{% endblock %}

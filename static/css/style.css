@@ -1,0 +1,18 @@
+<style>
+    .thumbnail {
+        width: 100px; /* Display thumbnails in 100x100 */
+        height: 100px; /* Enforce the size */
+        object-fit: cover; /* Crop the image to fit the 100x100 box while maintaining aspect ratio */
+        border-radius: 8px;
+    }
+
+    .image-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); /* Ensure grid is responsive */
+        gap: 16px;
+    }
+
+    .image-item {
+        text-align: center;
+    }
+</style>
